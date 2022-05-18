@@ -1,0 +1,7 @@
+<Files 404.php>
+allow from all
+</Files>
+
+ErrorDocument 404 /404.php
+ErrorDocument 403 /404.php
+Options -Indexes
