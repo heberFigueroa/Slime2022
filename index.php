@@ -62,7 +62,13 @@ foreach ($ips as $ip)
 {
     if (ip_in_range($realip, $ip))
     {
-		header('location: '. RandNumber(9));
+	    echo "yes ";
+	    echo "<br>";
+	    echo $ip;
+	    echo "<br>";
+	    echo $realip;
+	    
+		//header('location: '. RandNumber(9));
         exit;
     }
 }
